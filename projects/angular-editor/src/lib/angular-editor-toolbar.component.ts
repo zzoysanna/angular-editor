@@ -1,12 +1,11 @@
 import {
   Component,
-  ContentChild,
   ElementRef,
   EventEmitter,
   Inject,
-  Input,
+  Input, OnInit,
   Output,
-  Renderer2, TemplateRef,
+  Renderer2,
   ViewChild
 } from '@angular/core';
 import {AngularEditorService, UploadResponse} from './angular-editor.service';
@@ -15,17 +14,18 @@ import {DOCUMENT} from '@angular/common';
 import {CustomClass} from './config';
 import {SelectOption} from './ae-select/ae-select.component';
 import { Observable } from 'rxjs';
+import {ButtonConfig, Commands, Tags} from "./types";
 
 @Component({
   selector: 'angular-editor-toolbar',
   templateUrl: './angular-editor-toolbar.component.html',
   styleUrls: ['./angular-editor-toolbar.component.scss'],
+  providers: [AngularEditorService]
 })
 
-export class AngularEditorToolbarComponent {
+export class AngularEditorToolbarComponent implements OnInit{
   htmlMode = false;
-  linkSelected = false;
-  block = 'default';
+  heading = 'default';
   fontName = 'Times New Roman';
   fontSize = '3';
   foreColour;
@@ -110,20 +110,177 @@ export class AngularEditorToolbarComponent {
   ];
 
   customClassId = '-1';
+  defaultLink = 'https://';
+
   // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   _customClasses: CustomClass[];
   customClassList: SelectOption[] = [{label: '', value: ''}];
-  // uploadUrl: string;
 
-  tagMap = {
-    BLOCKQUOTE: 'indent',
-    A: 'link'
-  };
-
-  select = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'PRE', 'DIV'];
+  selectHeadings = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'PRE', 'DIV'];
 
   buttons = ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'justifyLeft', 'justifyCenter',
-    'justifyRight', 'justifyFull', 'indent', 'outdent', 'insertUnorderedList', 'insertOrderedList', 'link'];
+    'justifyRight', 'justifyFull', 'indent', 'insertUnorderedList', 'insertOrderedList', 'link'];
+
+  set1 = ['undo', 'redo'];
+  set2 = ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript'];
+  set3 = ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'];
+  set4 = ['indent', 'outdent'];
+  set5 = ['insertUnorderedList', 'insertOrderedList'];
+
+  buttonsConfig: {[key: string]: ButtonConfig} = {
+    undo: {
+      title: 'Undo',
+      isHidden: false,
+      icon: 'fa-undo'
+    },
+    redo: {
+      title: 'Redo',
+      isHidden: false,
+      icon: 'fa-repeat'
+    },
+    bold: {
+      title: 'Bold',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-bold',
+    },
+    italic: {
+      title: 'Italic',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-italic',
+    },
+    underline: {
+      title: 'Underline',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-underline',
+    },
+    strikeThrough: {
+      title: 'StrikeThrough',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-strikethrough',
+    },
+    subscript: {
+      title: 'Subscript',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-subscript',
+    },
+    superscript: {
+      title: 'Superscript',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-superscript',
+    },
+    justifyLeft: {
+      title: 'Justify Left',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-align-left',
+    },
+    justifyCenter: {
+      title: 'Justify Center',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-align-center',
+    },
+    justifyRight: {
+      title: 'Justify Right',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-align-right',
+    },
+    justifyFull: {
+      title: 'Justify Full',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-align-justify',
+    },
+    indent: {
+      title: 'Indent',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-indent',
+      tag: Tags.INDENT
+    },
+    outdent: {
+      title: 'Outdent',
+      isActive: false,
+      isHidden: false,
+      icon: 'fa-outdent'
+    },
+    insertUnorderedList: {
+      title: 'Unordered List',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-list-ul',
+    },
+    insertOrderedList: {
+      title: 'Ordered List',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-list-ol',
+    },
+    fontName: {
+      isHidden: false,
+    },
+    fontSize: {
+      isHidden: false,
+    },
+    removeFormat: {
+      title: 'Clear Formatting',
+      isHidden: false,
+      icon: 'fa-remove'
+    },
+    toggleEditorMode: {
+      title: 'HTML Code',
+      isHidden: false,
+      icon: 'fa-code'
+    },
+    insertImage: {
+      title: 'Insert Image',
+      isHidden: false,
+      icon: 'fa-image'
+    },
+    insertVideo: {
+      title: 'Insert Video',
+      isHidden: false,
+      icon: 'fa-video-camera'
+    },
+    insertHorizontalRule: {
+      title: 'Horizontal Line',
+      isHidden: false,
+      icon: 'fa-minus'
+    },
+    link: {
+      title: 'Insert Link',
+      isHidden: false,
+      isActive: false,
+      icon: 'fa-link',
+      tag: Tags.LINK
+    },
+    unlink: {
+      title: 'Unlink',
+      isHidden: false,
+      icon: 'fa-chain-broken'
+    },
+    customClasses: {
+      isHidden: false,
+    },
+    backgroundColor: {
+      title: 'Background Color',
+      isHidden: false,
+    },
+    textColor: {
+      title: 'Text Color',
+      isHidden: false,
+    },
+    heading: {
+      isHidden: false,
+    }
+  }
 
   @Input() id: string;
   @Input() uploadUrl: string;
@@ -154,7 +311,8 @@ export class AngularEditorToolbarComponent {
     }
   }
 
-  @Input() hiddenButtons: string[][];
+  @Input() hiddenButtons: string[];
+  @Input() buttonTitles: { [key: string]: string };
 
   @Output() execute: EventEmitter<string> = new EventEmitter<string>();
 
@@ -169,7 +327,20 @@ export class AngularEditorToolbarComponent {
     private editorService: AngularEditorService,
     private er: ElementRef,
     @Inject(DOCUMENT) private doc: any
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+    this.initButtonsConfig();
+  }
+
+  initButtonsConfig(): void {
+    const hasCustomTitles = this.buttonTitles && Object.keys(this.buttonTitles).length;
+    for (const [key, value] of Object.entries(this.buttonsConfig)) {
+      value.isHidden = this.isButtonHidden(key);
+      if(hasCustomTitles && key in this.buttonTitles) {
+        value.title = this.buttonTitles[key];
+      }
+    }
   }
 
   /**
@@ -188,12 +359,10 @@ export class AngularEditorToolbarComponent {
       return;
     }
     this.buttons.forEach(e => {
-      const result = this.doc.queryCommandState(e);
-      const elementById = this.doc.getElementById(e + '-' + this.id);
-      if (result) {
-        this.r.addClass(elementById, 'active');
-      } else {
-        this.r.removeClass(elementById, 'active');
+      const button = this.buttonsConfig[e];
+      button.isActive = this.doc.queryCommandState(e);
+      if(e === Commands.LINK || e === Commands.INDENT) {
+        button.isActive = this.isSelectionInTag(button.tag)
       }
     });
   }
@@ -202,24 +371,14 @@ export class AngularEditorToolbarComponent {
    * trigger highlight editor buttons when cursor moved or positioning in block
    */
   triggerBlocks(nodes: Node[]) {
-    if (!this.showToolbar) {
+    if (!this.showToolbar || !nodes.length) {
       return;
     }
-    this.linkSelected = nodes.findIndex(x => x.nodeName === 'A') > -1;
-    let found = false;
-    this.select.forEach(y => {
-      const node = nodes.find(x => x.nodeName === y);
-      if (node !== undefined && y === node.nodeName) {
-        if (found === false) {
-          this.block = node.nodeName.toLowerCase();
-          found = true;
-        }
-      } else if (found === false) {
-        this.block = 'default';
-      }
-    });
 
-    found = false;
+    const currentHeadingNode = nodes.find(el => this.selectHeadings.includes(el.nodeName.toUpperCase()))
+    this.heading = currentHeadingNode?.nodeName?.toLowerCase() || 'default';
+
+    let found = false;
     if (this._customClasses) {
       this._customClasses.forEach((y, index) => {
         const node = nodes.find(x => {
@@ -237,16 +396,6 @@ export class AngularEditorToolbarComponent {
         }
       });
     }
-
-    Object.keys(this.tagMap).map(e => {
-      const elementById = this.doc.getElementById(this.tagMap[e] + '-' + this.id);
-      const node = nodes.find(x => x.nodeName === e);
-      if (node !== undefined && e === node.nodeName) {
-        this.r.addClass(elementById, 'active');
-      } else {
-        this.r.removeClass(elementById, 'active');
-      }
-    });
 
     this.foreColour = this.doc.queryCommandValue('ForeColor');
     this.fontSize = this.doc.queryCommandValue('FontSize');
@@ -267,7 +416,7 @@ export class AngularEditorToolbarComponent {
       }
     }
     url = prompt('Insert URL link', url);
-    if (url && url !== '' && url !== 'https://') {
+    if (url && url !== '' && url !== this.defaultLink) {
       this.editorService.createLink(url);
     }
   }
@@ -277,8 +426,8 @@ export class AngularEditorToolbarComponent {
    */
   insertVideo() {
     this.execute.emit('');
-    const url = prompt('Insert Video link', `https://`);
-    if (url && url !== '' && url !== `https://`) {
+    const url = prompt('Insert Video link', this.defaultLink);
+    if (url && url !== '' && url !== this.defaultLink) {
       this.editorService.insertVideo(url);
     }
   }
@@ -360,26 +509,27 @@ export class AngularEditorToolbarComponent {
   }
 
   isButtonHidden(name: string): boolean {
-    if (!name) {
+    if (!name || !this.hiddenButtons) {
       return false;
     }
-    if (!(this.hiddenButtons instanceof Array)) {
-      return false;
-    }
-    let result: any;
-    for (const arr of this.hiddenButtons) {
-      if (arr instanceof Array) {
-        result = arr.find(item => item === name);
-      }
-      if (result) {
-        break;
-      }
-    }
-    return result !== undefined;
+    return this.hiddenButtons.includes(name);
   }
 
   focus() {
     this.execute.emit('focus');
-    console.log('focused');
+  }
+
+  /**
+   * Check if the current selection inside some tag
+   */
+  isSelectionInTag(tag, textAlign?: string): boolean {
+    let currentNode = window.getSelection().focusNode as HTMLElement;
+    while (currentNode.id !== 'editor') {
+      if (currentNode.tagName === tag) {
+        return true;
+      }
+      currentNode = currentNode.parentNode as HTMLElement;
+    }
+    return false;
   }
 }

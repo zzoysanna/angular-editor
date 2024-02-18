@@ -21,9 +21,14 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AngularEditorToolbarComponent } from './angular-editor-toolbar.component';
-import { AngularEditorService } from './angular-editor.service';
+import {AngularEditorService, headingTags} from './angular-editor.service';
 import { AngularEditorConfig, angularEditorConfig } from './config';
 import { isDefined } from './utils';
+
+interface SelectItem {
+  label: string,
+  value: string
+}
 
 @Component({
   selector: 'angular-editor',
@@ -52,6 +57,8 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
 
   focusInstance: any;
   blurInstance: any;
+  fonts: SelectItem[];
+  hiddenButtons?: string[];
 
   @Input() id = '';
   @Input() config: AngularEditorConfig = angularEditorConfig;
@@ -98,6 +105,8 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
 
   ngOnInit() {
     this.config.toolbarPosition = this.config.toolbarPosition ? this.config.toolbarPosition : angularEditorConfig.toolbarPosition;
+    this.fonts = this.getFonts();
+    this.hiddenButtons = this.config.toolbarHiddenButtons?.flat();
   }
 
   ngAfterViewInit() {
@@ -132,7 +141,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
         this.editorService.removeSelectedElements(this.getCustomTags());
         this.onContentChange(this.textArea.nativeElement);
       } else if (command === 'default') {
-        this.editorService.removeSelectedElements('h1,h2,h3,h4,h5,h6,p,pre');
+        this.editorService.removeSelectedElements(headingTags);
         this.onContentChange(this.textArea.nativeElement);
       } else {
         this.editorService.executeCommand(command, value);
@@ -205,7 +214,8 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
    * Executed from the contenteditable section while the input property changes
    * @param element html element from contenteditable
    */
-  onContentChange(element: HTMLElement): void {
+  onContentChange(event: Event): void {
+    const element = event.target as HTMLElement;
     let html = '';
     if (this.modeVisual) {
       html = element.innerHTML;
@@ -396,7 +406,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     }
   }
 
-  getFonts() {
+  getFonts(): SelectItem[] {
     const fonts = this.config.fonts ? this.config.fonts : angularEditorConfig.fonts;
     return fonts.map(x => {
       return {label: x.name, value: x.name};
@@ -422,10 +432,5 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     if (this.focusInstance) {
       this.focusInstance();
     }
-  }
-
-  filterStyles(html: string): string {
-    html = html.replace('position: fixed;', '');
-    return html;
   }
 }

@@ -8,6 +8,8 @@ export interface UploadResponse {
   imageUrl: string;
 }
 
+export const headingTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre']
+
 @Injectable()
 export class AngularEditorService {
 
@@ -27,8 +29,7 @@ export class AngularEditorService {
    * @param value
    */
   executeCommand(command: string, value?: string) {
-    const commands = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre'];
-    if (commands.includes(command)) {
+    if (headingTags.includes(command)) {
       this.doc.execCommand('formatBlock', false, command);
       return;
     }
@@ -291,8 +292,8 @@ export class AngularEditorService {
     parent.removeChild(el);
   }
 
-  removeSelectedElements(tagNames) {
-    const tagNamesArray = tagNames.toLowerCase().split(',');
+  removeSelectedElements(tagNames: string | string[]) {
+    const tagNamesArray = Array.isArray(tagNames) ? tagNames : tagNames.toLowerCase().split(',');
     this.getSelectedNodes().forEach((node) => {
       if (node.nodeType === 1 &&
         tagNamesArray.indexOf(node.tagName.toLowerCase()) > -1) {
