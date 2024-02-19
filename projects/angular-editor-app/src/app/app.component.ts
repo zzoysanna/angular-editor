@@ -47,10 +47,11 @@ export class AppComponent implements OnInit {
         tag: 'h1',
       },
     ],
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ]
+    toolbarHiddenButtons: [],
+    buttonTitles: {
+      undo: '11111',
+      redo: '22222',
+    }
   };
 
   config2: AngularEditorConfig = {
@@ -88,15 +89,15 @@ export class AppComponent implements OnInit {
     this.form = this.formBuilder.group({
       signature: ['', Validators.required]
     });
-    console.log(this.htmlContent1);
+    // console.log(this.htmlContent1);
   }
 
   onChange(event) {
-    console.log('changed');
+    // console.log('changed');
   }
 
   onBlur(event) {
-    console.log('blur ' + event);
+    // console.log('blur ' + event);
   }
 
   onChange2(event) {

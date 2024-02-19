@@ -38,6 +38,7 @@ export interface AngularEditorConfig {
   outline?: boolean;
   toolbarHiddenButtons?: string[][];
   rawPaste?: boolean;
+  buttonTitles?: {[key: string]: string}
 }
 
 export const angularEditorConfig: AngularEditorConfig = {
@@ -74,4 +75,5 @@ export const angularEditorConfig: AngularEditorConfig = {
     ['paragraph', 'blockquote', 'removeBlockquote', 'horizontalLine', 'orderedList', 'unorderedList'],
     ['link', 'unlink', 'image', 'video']
   ]*/
+  buttonTitles: {}
 };
