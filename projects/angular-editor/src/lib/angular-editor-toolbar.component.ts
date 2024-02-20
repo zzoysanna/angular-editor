@@ -19,8 +19,7 @@ import {ButtonConfig, Commands, Tags} from "./types";
 @Component({
   selector: 'angular-editor-toolbar',
   templateUrl: './angular-editor-toolbar.component.html',
-  styleUrls: ['./angular-editor-toolbar.component.scss'],
-  providers: [AngularEditorService]
+  styleUrls: ['./angular-editor-toolbar.component.scss']
 })
 
 export class AngularEditorToolbarComponent implements OnInit{
@@ -28,8 +27,8 @@ export class AngularEditorToolbarComponent implements OnInit{
   heading = 'default';
   fontName = 'Times New Roman';
   fontSize = '3';
-  foreColour;
-  backColor;
+  foreColour: string;
+  backColor: string;
 
   headings: SelectOption[] = [
     {

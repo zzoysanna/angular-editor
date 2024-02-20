@@ -1,5 +1,5 @@
 {
-  "name": "@zzoysanna/angular-editor",
+  "name": "@zzoysanna/angular-text-editor",
   "version": "0.0.1",
   "description": "A simple native WYSIWYG editor for Angular 8+, 13+. Rich Text editor component for Angular. Forked @kolkov/angular-editor",
   "repository": "https://github.com/zzoysanna/angular-editor",
