@@ -106,7 +106,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
   ngOnInit() {
     this.config.toolbarPosition = this.config.toolbarPosition ? this.config.toolbarPosition : angularEditorConfig.toolbarPosition;
     this.fonts = this.getFonts();
-    this.hiddenButtons = this.config.toolbarHiddenButtons?.flat();
+    this.hiddenButtons = this.config.toolbarHiddenButtons;
   }
 
   ngAfterViewInit() {

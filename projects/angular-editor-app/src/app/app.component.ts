@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
         tag: 'h1',
       },
     ],
-    toolbarHiddenButtons: [],
+    toolbarHiddenButtons: ['bold', 'italic'],
     buttonTitles: {
       undo: '11111',
       redo: '22222',

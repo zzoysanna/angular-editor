@@ -36,7 +36,7 @@ export interface AngularEditorConfig {
   sanitize?: boolean;
   toolbarPosition?: 'top' | 'bottom';
   outline?: boolean;
-  toolbarHiddenButtons?: string[][];
+  toolbarHiddenButtons?: string[];
   rawPaste?: boolean;
   buttonTitles?: {[key: string]: string}
 }
