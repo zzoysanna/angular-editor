@@ -1,5 +1,5 @@
-$fa-font-path: "/assets/fonts" !default;
-@import "~font-awesome/scss/font-awesome.scss";
+@import "styles/fonts";
+@import "styles/font-awesome.min.css";
 
 a {
   cursor: pointer;
