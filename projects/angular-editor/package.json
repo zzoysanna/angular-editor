@@ -1,6 +1,6 @@
 {
-  "name": "@zzoysanna/angular-editor",
-  "version": "0.0.1",
+  "name": "@zzoysanna/angular-text-editor",
+  "version": "0.1.2",
   "description": "A simple native WYSIWYG editor for Angular 8+, 13+. Rich Text editor component for Angular. Forked @kolkov/angular-editor",
   "repository": "https://github.com/zzoysanna/angular-editor",
   "license": "MIT",

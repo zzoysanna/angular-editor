@@ -1,6 +1,6 @@
 {
-  "name": "@zzoysanna/angular-editor",
-  "version": "0.0.1",
+  "name": "@zzoysanna/angular-text-editor",
+  "version": "0.1.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -29,7 +29,6 @@
     "@angular/platform-browser": "^13",
     "@angular/platform-browser-dynamic": "^13",
     "@angular/router": "^13",
-    "font-awesome": "^4.7.0",
     "rxjs": "~6.5.4",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.4"

@@ -97,7 +97,9 @@
             [disabled]="htmlMode"
             [hidden]="buttonsConfig['textColor'].isHidden"
             tabindex="-1">
-        <span class="color-label foreground"><i class="fa fa-font"></i></span>
+        <span class="color-label foreground" [ngStyle]="{'border-color': foreColour}">
+          <i class="fa fa-font"></i>
+        </span>
     </button>
     <input
       style="display: none"
@@ -109,7 +111,9 @@
             [disabled]="htmlMode"
             [hidden]="buttonsConfig['backgroundColor'].isHidden"
             tabindex="-1">
-      <span class="color-label background"><i class="fa fa-font"></i></span>
+      <span class="color-label background">
+        <i class="fa fa-font"></i>
+      </span>
     </button>
   </div>
   <div *ngIf="_customClasses" class="angular-editor-toolbar-set">
