@@ -49,8 +49,8 @@ export class AppComponent implements OnInit {
     ],
     toolbarHiddenButtons: ['bold', 'italic'],
     buttonTitles: {
-      undo: '11111',
-      redo: '22222',
+      undo: 'Custom undo',
+      redo: 'Custom redo',
     }
   };
 

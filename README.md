@@ -19,7 +19,7 @@
 A simple native WYSIWYG/Rich Text editor for Angular 6-14+. 
 Forked from @kolkov/angular-editor
 
-![Nov-27-2019 17-26-29](https://user-images.githubusercontent.com/216412/69763434-259cd800-113b-11ea-918f-0565ebce0e48.gif)
+[//]: # (![Nov-27-2019 17-26-29]&#40;https://user-images.githubusercontent.com/216412/69763434-259cd800-113b-11ea-918f-0565ebce0e48.gif&#41;)
 
 
 [//]: # (## Demo)
@@ -30,7 +30,7 @@ Forked from @kolkov/angular-editor
 
 ### Installation
 
-Install via [npm][npm] package manager 
+Install via [npm] package manager 
 
 ```bash
 npm install @zoysanna/angular-editor --save
@@ -51,7 +51,7 @@ Import `angular-editor` module
 
 ```js
 import { HttpClientModule} from '@angular/common/http';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AngularEditorModule } from '@zoysanna/angular-editor';
 
 @NgModule({
   imports: [ HttpClientModule, AngularEditorModule ]
@@ -80,7 +80,7 @@ if you using more than one editor on same page set `id` property
 where
 
 ```js
-import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { AngularEditorConfig } from '@zoysanna/angular-editor';
 
 
 editorConfig: AngularEditorConfig = {
@@ -125,22 +125,17 @@ editorConfig: AngularEditorConfig = {
     sanitize: true,
     toolbarPosition: 'top',
     toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ]
+      'bold', 'italic',
+      'fontSize'
+    ],
+    buttonTitles: {
+      undo: 'Custom undo',
+      redo: 'Custom redo',
+    }
 };
 ```
 For `ngModel` to work, you must import `FormsModule` from `@angular/forms`, or for `formControlName`, you must import `ReactiveFormsModule` from `@angular/forms`
 
-To serve the fontawesome files, ensure that your angular.json contains the following asset configuration:
-
-```
-{
-  "glob": "**/*",
-  "input": "./node_modules/@zoysanna/angular-editor/assets/",
-  "output": "./assets/fonts/"
-}
-```
 
 ### Custom buttons
 
@@ -188,35 +183,35 @@ The first argument of this method is aCommandName and the second argument is aVa
 
 ### Configuration
 
-| Input  | Type | Default | Required | Description |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-| editable  | `bolean` | `true` | no | Set editing enabled or not |
-| spellcheck  | `bolean` | `true` | no | Set spellchecking enabled or not |
-| translate  | `string` | `yes` | no | Set translating enabled or not |
-| sanitize  | `bolean` | `true` | no | Set DOM sanitizing enabled or not |
-| height  | `string` | `auto` | no | Set height of the editor |
-| minHeight  | `string` | `0` | no | Set minimum height of the editor |
-| maxHeight  | `string` | `auto` | no | Set maximum height of the editor |
-| width  | `string` | `auto` | no | Set width of the editor |
-| minWidth  | `string` | `0` | no | Set minimum width of the editor |
-| enableToolbar  | `bolean` | `true` | no | Set toolbar enabled or not |
-| showToolbar  | `bolean` | `true` | no | Set toolbar visible or not |
-| toolbarPosition  | `string` | `top` | no | Set toolbar position top or bottom |
-| placeholder  | `string` | `-` | no | Set placeholder text |
-| defaultParagraphSeparator  | `string` | `-` | no | Set default paragraph separator such as `p` |
-| defaultFontName  | `string` | `-` | no | Set default font such as `Comic Sans MS` |
-| defaultFontSize  | `string` | `-` | no | Set default font size such as `1` - `7` |
-| uploadUrl  | `string` | `-` | no | Set image upload endpoint `https://api.exapple.com/v1/image/upload` and return response with imageUrl key. {"imageUrl" : <url>} |
-| upload  | `function` | `-` | no | Set image upload function |
-| uploadWithCredentials | `bolean` | `false` | no | Set passing or not credentials in the image upload call |
-| fonts  | `Font[]` | `-` | no | Set array of available fonts  `[{name, class},...]` |
-| customClasses  | `CustomClass[]` | `-` | no | Set array of available fonts  `[{name, class, tag},...]` |
-| outline  | `bolean` | `true` | no | Set outline of the editor if in focus |
-| toolbarHiddenButtons  | `string[][]` | `-` | no | Set of the array of button names or elements to hide |
+| Input  | Type            | Default | Required | Description                                                                                                                     |
+| ------------- |-----------------| ------------- | ------------- |---------------------------------------------------------------------------------------------------------------------------------|
+| editable  | `boolean`        | `true` | no | Set editing enabled or not                                                                                                      |
+| spellcheck  | `boolean`        | `true` | no | Set spellchecking enabled or not                                                                                                |
+| translate  | `string`        | `yes` | no | Set translating enabled or not                                                                                                  |
+| sanitize  | `boolean`        | `true` | no | Set DOM sanitizing enabled or not                                                                                               |
+| height  | `string`        | `auto` | no | Set height of the editor                                                                                                        |
+| minHeight  | `string`        | `0` | no | Set minimum height of the editor                                                                                                |
+| maxHeight  | `string`        | `auto` | no | Set maximum height of the editor                                                                                                |
+| width  | `string`        | `auto` | no | Set width of the editor                                                                                                         |
+| minWidth  | `string`        | `0` | no | Set minimum width of the editor                                                                                                 |
+| enableToolbar  | `boolean`        | `true` | no | Set toolbar enabled or not                                                                                                      |
+| showToolbar  | `boolean`        | `true` | no | Set toolbar visible or not                                                                                                      |
+| toolbarPosition  | `string`        | `top` | no | Set toolbar position top or bottom                                                                                              |
+| placeholder  | `string`        | `-` | no | Set placeholder text                                                                                                            |
+| defaultParagraphSeparator  | `string`        | `-` | no | Set default paragraph separator such as `p`                                                                                     |
+| defaultFontName  | `string`        | `-` | no | Set default font such as `Comic Sans MS`                                                                                        |
+| defaultFontSize  | `string`        | `-` | no | Set default font size such as `1` - `7`                                                                                         |
+| uploadUrl  | `string`        | `-` | no | Set image upload endpoint `https://api.exapple.com/v1/image/upload` and return response with imageUrl key. {"imageUrl" : <url>} |
+| upload  | `function`      | `-` | no | Set image upload function                                                                                                       |
+| uploadWithCredentials | `boolean`        | `false` | no | Set passing or not credentials in the image upload call                                                                         |
+| fonts  | `Font[]`        | `-` | no | Set array of available fonts  `[{name, class},...]`                                                                             |
+| customClasses  | `CustomClass[]` | `-` | no | Set array of available fonts  `[{name, class, tag},...]`                                                                        |
+| outline  | `boolean`        | `true` | no | Set outline of the editor if in focus                                                                                           |
+| toolbarHiddenButtons  | `string[][]`    | `-` | no | Array of button names or elements to hide                                                                                       |
+| buttonTitles  | `object`        | `-` | no | Object of custom titles for buttons                                                                                             |
 
 ```js
 toolbarHiddenButtons: [
-  [
     'undo',
     'redo',
     'bold',
@@ -234,9 +229,7 @@ toolbarHiddenButtons: [
     'insertUnorderedList',
     'insertOrderedList',
     'heading',
-    'fontName'
-  ],
-  [
+    'fontName',
     'fontSize',
     'textColor',
     'backgroundColor',
@@ -248,7 +241,6 @@ toolbarHiddenButtons: [
     'insertHorizontalRule',
     'removeFormat',
     'toggleEditorMode'
-  ]
 ]
 ```
 
